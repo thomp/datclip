@@ -15,13 +15,21 @@
 	;; see SELECTION-CONVERTER-ALIST
 	(selection-converter 'STRING))
     (dolist (selection-symbol selection-symbols)
-      ;; X-GET-SELECTION "is obsolete since 25.1"
-      (let ((sel (gui-get-selection selection-symbol 'STRING))) 
+      ;; Use IGNORE-ERRORS since GUI-GET-SELECTION can error out with "Timed out waiting for reply from selection owner"      
+      (let ((sel (ignore-errors (gui-get-selection selection-symbol 'STRING))))
 	(progn
 	  (insert (propertize (symbol-name selection-symbol) 'face '(:foreground "green")))
 	  (insert-char ?\x000A 1)
-	  (if sel (insert sel)
-	    (insert (propertize " ** no selection ** " 'face '(:foreground "gray")))) 
+	  (if sel
+	      (insert sel) 
+	    ;; xclip (shell command) may succeed where GUI-GET-SELECTION and/or X-GET-SELECTION fail 
+	    (call-process "xclip" nil
+			  *datclip-buffer-name*	; insert content in dtk-buffer
+			  t   ; redisplay buffer as output is inserted
+			  ;; arguments: -b KJV k John
+			  "-selection" (symbol-name selection-symbol) "-o")
+	    ;(insert (propertize " ** no selection ** " 'face '(:foreground "gray")))
+	    )
 	  (insert-char ?\x000A 2))))))
 
 (defun datclip-buffer-exists-p ()
