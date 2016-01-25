@@ -9,8 +9,11 @@
   (if (datclip-buffer-exists-p)
       (datclip-clear-buffer)
     (get-buffer-create *datclip-buffer-name*))
+  (datclip-insert-selections)
+  (datclip-mode))
+
+(defun datclip-insert-selections ()
   (switch-to-buffer *datclip-buffer-name*)
-  (datclip-mode)
   (let ((selection-symbols '(PRIMARY SECONDARY CLIPBOARD))
 	;; see SELECTION-CONVERTER-ALIST
 	(selection-converter 'STRING))
@@ -28,7 +31,7 @@
 			  t   ; redisplay buffer as output is inserted
 			  ;; arguments: -b KJV k John
 			  "-selection" (symbol-name selection-symbol) "-o")
-	    ;(insert (propertize " ** no selection ** " 'face '(:foreground "gray")))
+	    ;;(insert (propertize " ** no selection ** " 'face '(:foreground "gray")))
 	    )
 	  (insert-char ?\x000A 2))))))
 
@@ -40,6 +43,11 @@
   (with-current-buffer *datclip-buffer-name*
     (delete-region (progn (beginning-of-buffer) (point))
 		   (progn (end-of-buffer) (point)))))
+
+(defun datclip-refresh-buffer ()
+  (interactive)
+  (datclip-clear-buffer)
+  (datclip-insert-selections))
 
 (defun datclip-quit ()
   (interactive)
@@ -63,6 +71,7 @@
       (let ((map (make-sparse-keymap))) 
 	(define-key map "c" 'datclip-clear-buffer)
 	(define-key map "q" 'datclip-quit)
+	(define-key map "r" 'datclip-refresh-buffer)
 	map))
 
 (defun datclip-mode ()
