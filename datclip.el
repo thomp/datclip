@@ -72,6 +72,7 @@
 	(define-key map "c" 'datclip-clear-buffer)
 	(define-key map "q" 'datclip-quit)
 	(define-key map "r" 'datclip-refresh-buffer)
+	(define-key map "g" 'datclip-refresh-buffer)
 	map))
 
 (defun datclip-mode ()
