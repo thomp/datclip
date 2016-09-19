@@ -14,7 +14,8 @@
 
 (defun datclip-insert-selections ()
   (switch-to-buffer *datclip-buffer-name*)
-  (let ((selection-symbols '(PRIMARY SECONDARY CLIPBOARD))
+  ;; SECONDARY is infrequently of interest 
+  (let ((selection-symbols '(PRIMARY CLIPBOARD))
 	;; see SELECTION-CONVERTER-ALIST
 	(selection-converter 'STRING))
     (dolist (selection-symbol selection-symbols)
