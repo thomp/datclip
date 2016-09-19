@@ -1,3 +1,0 @@
-#datclip
-
-Show the content of the primary selection and the clipboard in an emacs buffer. The default binding is to 's-c' (the 'Super' key and the 'c' key).
