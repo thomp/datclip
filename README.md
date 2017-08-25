@@ -1,6 +1,6 @@
 # datclip
 
-*Show the content of the primary selection and the clipboard in an emacs buffer.
+*Show the content of the primary selection and the clipboard in an emacs buffer.*
 
 ---
 
