@@ -50,6 +50,10 @@
     (delete-region (progn (beginning-of-buffer) (point))
 		   (progn (end-of-buffer) (point)))))
 
+(defun datclip-grab-primary ()
+  (interactive)
+  (kill-new (alist-get 'PRIMARY *datclip-values*)))
+
 (defun datclip-refresh-buffer ()
   (interactive)
   (datclip-clear-buffer)
@@ -77,6 +81,7 @@
       (let ((map (make-sparse-keymap))) 
 	(define-key map "c" 'datclip-clear-buffer)
 	(define-key map "q" 'datclip-quit)
+	(define-key map "p" 'datclip-grab-primary)
 	(define-key map "r" 'datclip-refresh-buffer)
 	(define-key map "g" 'datclip-refresh-buffer)
 	map))
