@@ -3,6 +3,9 @@
 ;;;
 (defvar *datclip-buffer-name* "*datclip*")
 
+(defvar *datclip-values* nil
+  "An alist holding the values.")
+
 (defun datclip ()
   "If datclip buffer already exists, move to it. Otherwise, generate the buffer and insert current selections"
   (interactive)
@@ -24,16 +27,18 @@
 	(progn
 	  (insert (propertize (symbol-name selection-symbol) 'face '(:foreground "green")))
 	  (insert-char ?\x000A 1)
-	  (if sel
-	      (insert sel) 
-	    ;; xclip (shell command) may succeed where GUI-GET-SELECTION and/or X-GET-SELECTION fail 
-	    (call-process "xclip" nil
-			  *datclip-buffer-name*	; insert content in dtk-buffer
-			  t   ; redisplay buffer as output is inserted
-			  ;; arguments: -b KJV k John
-			  "-selection" (symbol-name selection-symbol) "-o")
-	    ;;(insert (propertize " ** no selection ** " 'face '(:foreground "gray")))
-	    )
+	  (let ((content-start (point)))
+	    (if sel
+		(insert sel)
+	      ;; xclip (shell command) may succeed where GUI-GET-SELECTION and/or X-GET-SELECTION fail
+	      (call-process "xclip" nil
+			    *datclip-buffer-name*	; insert content in dtk-buffer
+			    t   ; redisplay buffer as output is inserted
+			    ;; arguments: -b KJV k John
+			    "-selection" (symbol-name selection-symbol) "-o")
+	      )
+	    (setf (alist-get selection-symbol *datclip-values*)
+		  (buffer-substring-no-properties content-start (point))))
 	  (insert-char ?\x000A 2))))))
 
 (defun datclip-buffer-exists-p ()
