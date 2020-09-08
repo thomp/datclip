@@ -18,6 +18,8 @@ Save datclip.el somewhere. Add a line to your ~/.emacs file which directs emacs 
 
 The default binding to show selection and clipboard content is <kbd>s-c</kbd> (the 'Super' key and the 'c' key).
 
+Press <kbd>p</kbd> to grab content of primary (push it onto the kill ring).
+
 Press <kbd>q</kbd> when you're done working with the datclip buffer.
 
 ## License
