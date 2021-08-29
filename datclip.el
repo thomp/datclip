@@ -16,8 +16,7 @@
   (datclip-mode))
 
 (defun datclip-insert-selections ()
-  (switch-to-buffer *datclip-buffer-name*)
-  ;; SECONDARY is infrequently of interest 
+  ;; SECONDARY is infrequently of interest
   (let ((selection-symbols '(PRIMARY CLIPBOARD))
 	;; see SELECTION-CONVERTER-ALIST
 	(selection-converter 'STRING))
@@ -30,11 +29,10 @@
 	  (let ((content-start (point)))
 	    (if sel
 		(insert sel)
-	      ;; xclip (shell command) may succeed where GUI-GET-SELECTION and/or X-GET-SELECTION fail
+	      ;; xclip (shell command) may "succeed" where GUI-GET-SELECTION and/or X-GET-SELECTION fail
 	      (call-process "xclip" nil
 			    *datclip-buffer-name*	; insert content in dtk-buffer
 			    t   ; redisplay buffer as output is inserted
-			    ;; arguments: -b KJV k John
 			    "-selection" (symbol-name selection-symbol) "-o")
 	      )
 	    (setf (alist-get selection-symbol *datclip-values*)
@@ -57,6 +55,7 @@
 (defun datclip-refresh-buffer ()
   (interactive)
   (datclip-clear-buffer)
+  (switch-to-buffer *datclip-buffer-name*)  ; needed?
   (datclip-insert-selections))
 
 (defun datclip-quit ()
