@@ -15,6 +15,12 @@
   (datclip-insert-selections)
   (datclip-mode))
 
+(defun datclip-update-selections ()
+  "Just set *datclip-values*. Don't concern user with the datclip buffer (although we do use it)."
+  (get-buffer-create *datclip-buffer-name*) ; ensure buffer exists
+  (with-current-buffer *datclip-buffer-name*
+    (datclip-insert-selections)))
+
 (defun datclip-insert-selections ()
   ;; SECONDARY is infrequently of interest
   (let ((selection-symbols '(PRIMARY CLIPBOARD))
