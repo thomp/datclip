@@ -22,7 +22,7 @@
 	;; see SELECTION-CONVERTER-ALIST
 	(selection-converter 'STRING))
     (dolist (selection-symbol selection-symbols)
-      ;; Use IGNORE-ERRORS since GUI-GET-SELECTION can error out with "Timed out waiting for reply from selection owner"      
+      ;; Use IGNORE-ERRORS since GUI-GET-SELECTION can error out with "Timed out waiting for reply from selection owner"
       (let ((sel (ignore-errors (gui-get-selection selection-symbol 'STRING))))
 	(progn
 	  (insert (propertize (symbol-name selection-symbol) 'face '(:foreground "green")))
@@ -77,8 +77,8 @@
 
 (defvar datclip-mode-map nil
   "Major mode keymap for `datclip-mode'.")
-(setq datclip-mode-map 
-      (let ((map (make-sparse-keymap))) 
+(setq datclip-mode-map
+      (let ((map (make-sparse-keymap)))
 	(define-key map "c" 'datclip-clear-buffer)
 	(define-key map "q" 'datclip-quit)
 	(define-key map "p" 'datclip-grab-primary)
