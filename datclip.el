@@ -91,15 +91,15 @@
 \\{datclip-mode-map}
 Turning on datclip mode runs `text-mode-hook', then `datclip-mode-hook'."
   (interactive)
+  (progn
+    (kill-all-local-variables)
+    (use-local-map datclip-mode-map)
+    (setq mode-name "datclip")
+    (setq major-mode 'datclip-mode)
+    (set-syntax-table text-mode-syntax-table)
+    (setq local-abbrev-table datclip-mode-abbrev-table)
+    (make-local-variable 'paragraph-start)
+    (make-local-variable 'paragraph-separate)
+    (run-hooks 'text-mode-hook 'datclip-mode-hook))
   (if (executable-find "xclip")
-      (progn
-	(kill-all-local-variables)
-	(use-local-map datclip-mode-map)
-	(setq mode-name "datclip")
-	(setq major-mode 'datclip-mode)
-	(set-syntax-table text-mode-syntax-table)
-	(setq local-abbrev-table datclip-mode-abbrev-table)
-	(make-local-variable 'paragraph-start)
-	(make-local-variable 'paragraph-separate)
-	(run-hooks 'text-mode-hook 'datclip-mode-hook))
-    (message "%s" "For datclip to function correctly, xclip must be available")))
+      (message "%s" "datclip functionality will be limited unless xclip is available")))
