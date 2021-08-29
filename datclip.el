@@ -12,6 +12,7 @@
   (if (datclip-buffer-exists-p)
       (datclip-clear-buffer)
     (get-buffer-create *datclip-buffer-name*))
+  (switch-to-buffer *datclip-buffer-name*)
   (datclip-insert-selections)
   (datclip-mode))
 
