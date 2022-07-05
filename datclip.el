@@ -58,6 +58,10 @@
 (defun datclip-grab-primary ()
   (interactive)
   (kill-new (alist-get 'PRIMARY *datclip-values*)))
+(defun datclip-update-and-grab-primary ()
+  (interactive)
+  (datclip-update-selections)
+  (datclip-grab-primary))
 
 (defun datclip-refresh-buffer ()
   (interactive)
