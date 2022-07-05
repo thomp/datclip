@@ -111,5 +111,5 @@ Turning on datclip mode runs `text-mode-hook', then `datclip-mode-hook'."
     (make-local-variable 'paragraph-start)
     (make-local-variable 'paragraph-separate)
     (run-hooks 'text-mode-hook 'datclip-mode-hook))
-  (if (executable-find "xclip")
+  (if (not (executable-find "xclip"))
       (message "%s" "datclip functionality will be limited unless xclip is available")))
