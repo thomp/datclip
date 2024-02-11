@@ -1,5 +1,7 @@
 # datclip
 
+<2024-02-11> Archived & moved to codeberg.org.
+
 *Show the content of the primary selection and the clipboard in an emacs buffer.*
 
 ---
